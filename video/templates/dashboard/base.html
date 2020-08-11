@@ -7,13 +7,15 @@
     <link href="/static/dashboard/css/base.css" rel="stylesheet" />
     ${self.css()}
 </head>
+<%! from django.shortcuts import reverse %>
 <body>
 <%include file="nav.html" />
 <div id="base-area">
 <ul class="side-menu">
-    <li>Admin</li>
+    <li><a href="${reverse('admin_manager')}">Admin</a></li>
     <li>User</li>
-    <li>Video</li>
+    <li><a href="${reverse('external_video')}">External Video</a></li>
+    <li>Homemade Video</li>
 </ul>
 <div class="base-content">
 ${self.content()}
