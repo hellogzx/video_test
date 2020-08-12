@@ -35,6 +35,15 @@ NationalityType.korea.label = 'korea'
 NationalityType.america.label = 'America'
 NationalityType.other.label = 'Other'
 
+class IdentityType(Enum):
+    to_star = 'to_star'
+    supporting_role = 'supporting_role'
+    director = 'director'
+
+IdentityType.to_star.label = 'main actor'
+IdentityType.supporting_role.label = 'supporting role'
+IdentityType.director.label = 'director'
+
 class Video(models.Model):
     name = models.CharField(max_length=100,null=False)
     image = models.CharField(max_length=500,default='')
