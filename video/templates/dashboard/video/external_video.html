@@ -4,7 +4,7 @@
 <%
 from app.model.video import VideoType,FromType,NationalityType
 %>
-<h1>External Video</h1>
+<h3>External Video</h3>
 <button class="btn btn-info open-btn" id="open-add-video-btn">Create</button><span>${error}</span>
 
 <form id="video-edit-area" class="form-horizontal edit-area add-video-area" action="" method="POST">${csrf_token}
@@ -33,9 +33,7 @@ from app.model.video import VideoType,FromType,NationalityType
             <label>Video Source</label>
             <select class="form-control video-select" name="from_to">
                 %for from_to in FromType:
-                %if from_to != FromType('custom'):
                 <option value="${from_to.value}">${from_to.label}</option>
-                %endif
                 %endfor
             </select>
         </div>
@@ -57,6 +55,7 @@ from app.model.video import VideoType,FromType,NationalityType
     </div>
     <button type="submit" class="btn btn-info">Add</button>
 </form>
+<h3 id="custom-h3">Custom Videos</h3>
 <table class="table">
     <thead>
         <tr>
@@ -73,7 +72,7 @@ from app.model.video import VideoType,FromType,NationalityType
         </tr>
     </thead>
     <tbody>
-        % for video in videos:
+        % for video in cus_videos:
         <tr>
             <td>${video.name}</td>
             <td><img class="video-images" src="${video.image}" /></td>
@@ -81,10 +80,51 @@ from app.model.video import VideoType,FromType,NationalityType
             <td>${FromType(video.from_to).label}</td>
             <td>${NationalityType(video.nationality).label}</td>
             <td><p class="info">${video.info}</p></td>
-            <td>$video.status}</td>
+            <td>${video.status}</td>
             <td>${video.created_time}</td>
             <td>${video.updated_time}</td>
-            <td><a href="">Edit</a> <a href="${reverse('video_sub',kwargs={'video_id': video.id})}">Information</a></td>
+            <td>
+                <a href="${reverse('video_update', kwargs={'video_id': video.id})}">Edit</a>
+                <a href="${reverse('video_sub',kwargs={'video_id': video.id})}">Information</a>
+                <a href="${reverse('video_update_static', kwargs={'video_id':video.id})}">Change Status</a>
+            </td>
+        </tr>
+        % endfor
+    </tbody>
+</table>
+<h3>External Videos</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>name</th>
+            <th>poster</th>
+            <th>video type</th>
+            <th>video source</th>
+            <th>nation</th>
+            <th>info</th>
+            <th>status</th>
+            <th>created time</th>
+            <th>updated time</th>
+            <th>edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        % for video in ex_videos:
+        <tr>
+            <td>${video.name}</td>
+            <td><img class="video-images" src="${video.image}" /></td>
+            <td>${VideoType(video.video_type).label}</td>
+            <td>${FromType(video.from_to).label}</td>
+            <td>${NationalityType(video.nationality).label}</td>
+            <td><p class="info">${video.info}</p></td>
+            <td>${video.status}</td>
+            <td>${video.created_time}</td>
+            <td>${video.updated_time}</td>
+            <td>
+                <a href="${reverse('video_update', kwargs={'video_id': video.id})}">Edit</a>
+                <a href="${reverse('video_sub',kwargs={'video_id': video.id})}">Information</a>
+                <a href="${reverse('video_update_static', kwargs={'video_id':video.id})}">Change Status</a>
+            </td>
         </tr>
         % endfor
     </tbody>
